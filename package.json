@@ -1,0 +1,40 @@
+{
+  "name": "@cloudstek/cache",
+  "version": "1.0.0",
+  "description": "Simple key/value (cache) store.",
+  "author": "Maarten de Boer <maarten@cloudstek.nl>",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "dependencies": {
+    "fs-extra": "^8.0.1",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^7.0.0",
+    "@types/mockdate": "^2.0.0",
+    "@types/node": "^12.0.2",
+    "ava": "^1.4.1",
+    "mockdate": "^2.0.2",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "test": "ava"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+}
