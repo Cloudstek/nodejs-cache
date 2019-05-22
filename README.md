@@ -1,6 +1,8 @@
 # @cloudstek/cache
 > Simple key/value (cache) store.
 
+[![CircleCI](https://circleci.com/gh/Cloudstek/nodejs-cache.svg?style=svg)](https://circleci.com/gh/Cloudstek/nodejs-cache) [![Coverage Status](https://coveralls.io/repos/github/Cloudstek/nodejs-cache/badge.svg?branch=master)](https://coveralls.io/github/Cloudstek/nodejs-cache?branch=master)
+
 It doesn't do anything fancy and it doesn't have a fancy name. Yet I needed a simple key/value store with optional support for expiration of items.
 
 ### Features
@@ -28,6 +30,35 @@ Using NPM:
 
 ```sh
 npm install @cloudstek/cache
+```
+
+## Development
+
+Clone this repository to get started.
+
+### Checking code for style
+
+To check the code for style correctness run:
+
+```sh
+yarn lint
+```
+
+### Running tests
+
+Tests are run using [Ava](https://github.com/avajs/ava) and coverage is generated using [Istanbul](https://istanbul.js.org/). To run the tests run:
+
+```sh
+yarn test
+```
+
+### Building the code for release
+
+To build the code for release (e.g. npm publish), run:
+
+```sh
+yarn run clean
+yarn build
 ```
 
 ## Also check out

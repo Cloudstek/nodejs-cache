@@ -18,6 +18,7 @@
     "@types/mockdate": "^2.0.0",
     "@types/node": "^12.0.2",
     "ava": "^1.4.1",
+    "coveralls": "^3.0.3",
     "del-cli": "^1.1.0",
     "mockdate": "^2.0.2",
     "npm-run-all": "^4.1.5",
@@ -36,8 +37,10 @@
     "clean:coverage": "del-cli coverage .nyc_output",
     "build": "tsc",
     "build:test": "tsc -p tsconfig.test.json",
+    "build:ci": "npm-run-all -s clean build",
     "test": "npm-run-all clean:test clean:coverage build:test test:run clean:test",
     "test:run": "nyc ava",
+    "test:ci": "npm-run-all -p clean:* -s build:test && nyc ava && nyc report --reporter=text-lcov | coveralls",
     "lint": "npm-run-all -l -p lint:src lint:test",
     "lint:src": "tslint src/**/*.ts",
     "lint:test": "tslint test/**/*.ts"
