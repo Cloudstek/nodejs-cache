@@ -31,7 +31,7 @@ test("iterate over items using all", (t) => {
 
     const all = c.all();
 
-    t.plan(3);
+    t.plan(5);
     t.is(c.keys.length, 2);
     t.is(typeof all, "object");
 
