@@ -1,22 +1,20 @@
-import * as moment from 'moment';
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import { Duration } from 'moment';
-import { CacheItem, CacheOptions, CacheStore } from './types';
+import * as fs from "fs-extra";
+import * as moment from "moment";
+import { Duration } from "moment";
+import * as path from "path";
+import { ICacheItem, ICacheOptions, ICacheStore } from "./types";
 
-export class Cache<T = unknown> implements CacheStore<T>
-{
-    private options: CacheOptions;
-    private store: Record<string, CacheItem<T>>;
+export class Cache<T = unknown> implements ICacheStore<T> {
+    private options: ICacheOptions;
+    private store: Record<string, ICacheItem<T>>;
 
-    public constructor(options?: CacheOptions)
-    {
+    public constructor(options?: ICacheOptions) {
         this.store = {};
         this.options = Object.assign({}, {
-            name: 'cache.json',
-            dir: path.join(process.cwd(), '.cache'),
+            autoCommit: true,
+            dir: path.join(process.cwd(), ".cache"),
+            name: "cache.json",
             ttl: 3600,
-            autoCommit: true
         }, options);
 
         if (this.options.name !== null && this.options.dir !== null) {
@@ -24,8 +22,7 @@ export class Cache<T = unknown> implements CacheStore<T>
         }
     }
 
-    public has(key: string): boolean
-    {
+    public has(key: string): boolean {
         if (!this.store.hasOwnProperty(key)) {
             return false;
         }
@@ -46,8 +43,19 @@ export class Cache<T = unknown> implements CacheStore<T>
         return true;
     }
 
-    public get(key: string): T | undefined
-    {
+    public all() {
+        const entries = Object.entries(this.store);
+
+        const values: any = {};
+
+        for (const [key, value] of Object.entries(this.store)) {
+            values[key] = value.value;
+        }
+
+        return values;
+    }
+
+    public get(key: string): T | undefined {
         if (!this.has(key)) {
             return;
         }
@@ -55,8 +63,7 @@ export class Cache<T = unknown> implements CacheStore<T>
         return this.store[key].value;
     }
 
-    public set(key: string, value: T, ttl?: number | Duration | false): void
-    {
+    public set(key: string, value: T, ttl?: number | Duration | false): void {
         if (ttl === undefined) {
             ttl = this.options.ttl;
         }
@@ -65,7 +72,7 @@ export class Cache<T = unknown> implements CacheStore<T>
 
         this.store[key] = {
             expires: ttl.asSeconds() <= 0 ? false : moment.utc().add(ttl).unix(),
-            value: value
+            value,
         };
 
         if (this.options.autoCommit === true) {
@@ -73,8 +80,7 @@ export class Cache<T = unknown> implements CacheStore<T>
         }
     }
 
-    public unset(key: string): void
-    {
+    public unset(key: string): void {
         if (!this.store.hasOwnProperty(key)) {
             return;
         }
@@ -86,8 +92,7 @@ export class Cache<T = unknown> implements CacheStore<T>
         }
     }
 
-    public commit(): void
-    {
+    public commit(): void {
         if (this.options.name === null || this.options.dir === null) {
             return;
         }
@@ -96,8 +101,7 @@ export class Cache<T = unknown> implements CacheStore<T>
         fs.writeJsonSync(path.join(this.options.dir, this.options.name), this.store);
     }
 
-    public clear(): void
-    {
+    public clear(): void {
         this.store = {};
 
         if (this.options.autoCommit === true) {
@@ -105,13 +109,12 @@ export class Cache<T = unknown> implements CacheStore<T>
         }
     }
 
-    public get keys(): string[]
-    {
+    public get keys(): string[] {
         return Object.keys(this.store);
     }
 
-    *[Symbol.iterator](): Iterator<[string, T]> {
-        for (let [key, value] of Object.entries(this.store)) {
+    public *[Symbol.iterator](): Iterator<[string, T]> {
+        for (const [key, value] of Object.entries(this.store)) {
             if (value.expires !== false && moment.unix(value.expires).utc() <= moment.utc()) {
                 continue;
             }
@@ -125,18 +128,17 @@ export class Cache<T = unknown> implements CacheStore<T>
      *
      * @param duration Duration in seconds or as moment.js duration
      */
-    private parseDuration(duration: number | Duration | false): Duration
-    {
-        if (typeof duration === 'number') {
+    private parseDuration(duration: number | Duration | false): Duration {
+        if (typeof duration === "number") {
             if (duration < 0) {
                 duration = 0;
             }
 
-            return moment.duration(duration, 'seconds');
+            return moment.duration(duration, "seconds");
         }
 
         if (duration === false || duration.asSeconds() < 0) {
-            return moment.duration(0, 'seconds');
+            return moment.duration(0, "seconds");
         }
 
         return duration;
@@ -145,14 +147,13 @@ export class Cache<T = unknown> implements CacheStore<T>
     /**
      * Load cache store from file.
      *
-     * @param path
+     * @param p
      */
-    private loadFromFile(path: string): Record<string, CacheItem<T>>
-    {
+    private loadFromFile(file: string): Record<string, ICacheItem<T>> {
         try {
-            fs.statSync(path);
-            return fs.readJsonSync(path);
-        } catch(e) {
+            fs.statSync(file);
+            return fs.readJsonSync(file);
+        } catch (e) {
             return {};
         }
     }

@@ -1,17 +1,15 @@
-import * as fs from 'fs-extra';
-import * as path from 'path';
-import * as crypto from 'crypto';
-import { ExecutionContext } from 'ava';
+import { ExecutionContext } from "ava";
+import * as crypto from "crypto";
+import * as fs from "fs-extra";
+import * as path from "path";
 
-import { TestContext } from './_types';
+import { ITestContext } from "./_types";
 
-export function randomString(length: number = 15): string
-{
-    return crypto.randomBytes(Math.round(length / 2)).toString('hex');
+export function randomString(length: number = 15): string {
+    return crypto.randomBytes(Math.round(length / 2)).toString("hex");
 }
 
-export function pathExists(...paths: string[]): boolean
-{
+export function pathExists(...paths: string[]): boolean {
     try {
         fs.statSync(path.join(...paths));
         return true;
@@ -20,8 +18,7 @@ export function pathExists(...paths: string[]): boolean
     }
 }
 
-export function cleanup(t?: ExecutionContext<TestContext>): void
-{
+export function cleanup(t?: ExecutionContext<ITestContext>): void {
     if (t) {
         if (t.context.dirs && t.context.dirs.length > 0) {
             for (const dir of t.context.dirs) {
@@ -30,5 +27,5 @@ export function cleanup(t?: ExecutionContext<TestContext>): void
         }
     }
 
-    fs.removeSync('.cache');
+    fs.removeSync(".cache");
 }
