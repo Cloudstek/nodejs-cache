@@ -1,7 +1,6 @@
-import { CacheOptions } from "../src/types";
+import { ICacheOptions } from "../src/types";
 
-export interface TestContext
-{
+export interface ITestContext {
     dirs: string[];
-    options: CacheOptions;
+    options: ICacheOptions;
 }

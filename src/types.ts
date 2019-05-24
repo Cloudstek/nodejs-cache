@@ -1,7 +1,6 @@
-import { Duration } from 'moment';
+import { Duration } from "moment";
 
-export interface CacheOptions
-{
+export interface ICacheOptions {
     /**
      * Cache file name.
      */
@@ -22,18 +21,21 @@ export interface CacheOptions
     autoCommit?: boolean;
 }
 
-export interface CacheItem<T>
-{
+export interface ICacheItem<T> {
     expires: number | false;
     value: T;
 }
 
-export interface CacheStore<T> extends Iterable<[string, T]>
-{
+export interface ICacheStore<T> extends Iterable<[string, T]> {
     /**
      * List all keys in cache store.
      */
     readonly keys: string[];
+
+    /**
+     * Number of items in cache store.
+     */
+    readonly length: number;
 
     /**
      * Check if cache store contains item by key.
