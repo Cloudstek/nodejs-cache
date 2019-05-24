@@ -9,29 +9,9 @@ jobs:
 
       - run: yarn
       - run: yarn test:ci
-  publish:
-    docker:
-      - image: node:8
-    steps:
-      - checkout
 
-      - run: yarn
-      - run: yarn build:ci
-
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
 workflows:
   version: 2
   test-publish:
     jobs:
       - test
-      - publish:
-          type: approval
-          requires:
-            - test
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
