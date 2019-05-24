@@ -1,5 +1,7 @@
 import Test, { TestInterface } from "ava";
 import * as fs from "fs-extra";
+import MockDate = require("mockdate");
+import moment = require("moment");
 import * as path from "path";
 
 import { Cache } from "../src/index";
@@ -12,6 +14,10 @@ const test = Test as TestInterface<ITestContext>;
 // Set context
 test.before((t) => {
     t.context.dirs = [];
+});
+
+test.beforeEach((t) => {
+    MockDate.set(moment.utc("2019-01-01T14:00:00").valueOf());
 });
 
 // Defaults

@@ -33,6 +33,11 @@ export interface ICacheStore<T> extends Iterable<[string, T]> {
     readonly keys: string[];
 
     /**
+     * Number of items in cache store.
+     */
+    readonly length: number;
+
+    /**
      * Check if cache store contains item by key.
      *
      * @param  key

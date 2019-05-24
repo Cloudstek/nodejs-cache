@@ -5,7 +5,8 @@
   ],
   "include": ["src/**/*.ts", "build/src/**/*.js"],
   "reporter": [
-    "text"
+    "text",
+    "html"
   ],
   "cache": true,
   "sourceMap": true,

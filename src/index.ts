@@ -48,7 +48,11 @@ export class Cache<T = unknown> implements ICacheStore<T> {
 
         const values: any = {};
 
-        for (const [key, value] of Object.entries(this.store)) {
+        for (const [key, value] of entries) {
+            if (value.expires !== false && moment.unix(value.expires).utc() <= moment.utc()) {
+                continue;
+            }
+
             values[key] = value.value;
         }
 
@@ -110,11 +114,27 @@ export class Cache<T = unknown> implements ICacheStore<T> {
     }
 
     public get keys(): string[] {
-        return Object.keys(this.store);
+        let entries = Object.entries(this.store);
+
+        entries = entries.filter((entry) => {
+            if (entry[1].expires !== false && moment.unix(entry[1].expires).utc() <= moment.utc()) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return Object.keys(entries);
+    }
+
+    public get length(): number {
+        return this.keys.length;
     }
 
     public *[Symbol.iterator](): Iterator<[string, T]> {
-        for (const [key, value] of Object.entries(this.store)) {
+        const entries = Object.entries(this.store);
+
+        for (const [key, value] of entries) {
             if (value.expires !== false && moment.unix(value.expires).utc() <= moment.utc()) {
                 continue;
             }
