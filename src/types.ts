@@ -40,16 +40,16 @@ export interface ICacheStore<T> extends Iterable<[string, T]> {
     /**
      * Check if cache store contains item by key.
      *
-     * @param  key
+     * @param key
      */
     has(key: string): boolean;
 
     /**
      * Get cache item
      *
-     * @param  key
+     * @param key
      */
-    get(key: string): T;
+    get(key: string): T | undefined;
 
     /**
      * Set cache item
