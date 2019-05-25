@@ -1,6 +1,6 @@
 import Test, { TestInterface } from "ava";
-import MockDate = require("mockdate");
-import moment = require("moment");
+import MockDate from "mockdate";
+import moment from "moment";
 
 import { Cache } from "../src/index";
 

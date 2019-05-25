@@ -1,7 +1,7 @@
 import Test, { TestInterface } from "ava";
-import * as fs from "fs-extra";
-import MockDate = require("mockdate");
-import moment = require("moment");
+import fs from "fs-extra";
+import MockDate from "mockdate";
+import moment from "moment";
 import * as path from "path";
 
 import { Cache } from "../src/index";

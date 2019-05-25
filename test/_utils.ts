@@ -1,8 +1,8 @@
 import { ExecutionContext } from "ava";
-import * as crypto from "crypto";
-import * as fs from "fs-extra";
-import MockDate = require("mockdate");
-import * as path from "path";
+import crypto from "crypto";
+import fs from "fs-extra";
+import MockDate from "mockdate";
+import path from "path";
 
 import { ITestContext } from "./_types";
 
