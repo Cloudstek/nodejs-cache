@@ -16,7 +16,7 @@ test.before((t) => {
     t.context.dirs = [];
 });
 
-test.beforeEach((t) => {
+test.beforeEach(() => {
     MockDate.set(moment.utc("2019-01-01T14:00:00").valueOf());
 });
 
