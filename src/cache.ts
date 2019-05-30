@@ -5,6 +5,7 @@ import path from "path";
 import { ICacheItem, ICacheOptions, ICacheStore } from "./types";
 
 export class Cache<T = unknown> implements ICacheStore<T> {
+    private filePath?: string;
     private options: ICacheOptions;
     private store: Record<string, ICacheItem<T>>;
 
@@ -17,8 +18,9 @@ export class Cache<T = unknown> implements ICacheStore<T> {
             ttl: 3600,
         }, options);
 
-        if (this.options.name !== null && this.options.dir !== null) {
-            this.store = this.loadFromFile(path.join(this.options.dir, this.options.name));
+        if (typeof this.options.name === "string" && typeof this.options.dir === "string") {
+            this.filePath = path.resolve(this.options.dir, this.options.name);
+            this.store = this.loadFromFile(this.filePath);
         }
     }
 
@@ -97,12 +99,12 @@ export class Cache<T = unknown> implements ICacheStore<T> {
     }
 
     public commit(): void {
-        if (this.options.name === null || this.options.dir === null) {
+        if (!this.filePath) {
             return;
         }
 
-        fs.ensureDirSync(this.options.dir);
-        fs.writeJsonSync(path.join(this.options.dir, this.options.name), this.store);
+        fs.ensureFileSync(this.filePath);
+        fs.writeJsonSync(this.filePath, this.store);
     }
 
     public clear(): void {
