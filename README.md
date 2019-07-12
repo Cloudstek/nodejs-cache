@@ -34,14 +34,22 @@ npm install @cloudstek/cache
 
 ## Development
 
-Clone this repository to get started.
+Clone this repository to get started. You can replace `yarn` in the commands below with `npm` if you use NPM.
+
+### Build code and watch for changes
+
+During development you can build the code once and have typescript watch for changes and recompile automatically.
+
+```sh
+yarn run watch
+```
 
 ### Checking code for style
 
 To check the code for style correctness run:
 
 ```sh
-yarn lint
+yarn run lint
 ```
 
 ### Running tests
@@ -49,7 +57,8 @@ yarn lint
 Tests are run using [Ava](https://github.com/avajs/ava) and coverage is generated using [Istanbul](https://istanbul.js.org/). To run the tests run:
 
 ```sh
-yarn test
+yarn run build
+yarn run test
 ```
 
 ### Building the code for release
@@ -57,8 +66,7 @@ yarn test
 To build the code for release (e.g. npm publish), run:
 
 ```sh
-yarn run clean
-yarn build
+yarn run build:dist
 ```
 
 ## Also check out

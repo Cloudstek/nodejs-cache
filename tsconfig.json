@@ -7,9 +7,9 @@
     "noImplicitAny": true,
     "declaration": true,
     "declarationMap": false,
-    "sourceMap": false,
+    "sourceMap": true,
     "esModuleInterop": true,
-    "outDir": "dist",
+    "outDir": "build",
   },
   "include": [
     "src/**/*",

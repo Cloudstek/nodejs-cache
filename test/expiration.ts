@@ -19,7 +19,7 @@ test.before((t) => {
 test.beforeEach((t) => {
     const dir = util.randomString();
 
-    MockDate.set(moment.utc("2019-01-01T14:00:00").valueOf());
+    MockDate.set(moment.utc("2019-01-01T14:00:00").toDate());
 
     t.context.dirs.push(dir);
     t.context.options = {
@@ -46,7 +46,7 @@ test("check expiration on new item", (t) => {
 
     t.is(c.keys.length, 3);
 
-    MockDate.set(moment().add(30, "minutes"));
+    MockDate.set(moment().add(30, "minutes").toDate());
 
     t.true(c.has("apple"));
     t.true(c.has("strawberry"));
@@ -58,7 +58,7 @@ test("check expiration on new item", (t) => {
 
     t.is(c.keys.length, 3);
 
-    MockDate.set(moment().add(1, "hour"));
+    MockDate.set(moment().add(1, "hour").toDate());
 
     t.true(c.has("apple"));
     t.false(c.has("strawberry"));
@@ -70,7 +70,7 @@ test("check expiration on new item", (t) => {
 
     t.is(c.keys.length, 1);
 
-    MockDate.set(moment().add(2, "hours"));
+    MockDate.set(moment().add(2, "hours").toDate());
 
     t.false(c.has("apple"));
     t.is(c.get("foo"), undefined);
@@ -106,7 +106,7 @@ test("check expiration on new item with autocommit", (t) => {
     t.true(util.pathExists(t.context.options.dir, "cache.json"));
     t.snapshot(fs.readFileSync(path.join(t.context.options.dir, "cache.json"), "utf8"));
 
-    MockDate.set(moment().add(30, "minutes"));
+    MockDate.set(moment().add(30, "minutes").toDate());
 
     t.true(c.has("apple"));
     t.true(c.has("strawberry"));
@@ -119,7 +119,7 @@ test("check expiration on new item with autocommit", (t) => {
     t.is(c.keys.length, 3);
     t.snapshot(fs.readFileSync(path.join(t.context.options.dir, "cache.json"), "utf8"));
 
-    MockDate.set(moment().add(1, "hour"));
+    MockDate.set(moment().add(1, "hour").toDate());
 
     t.true(c.has("apple"));
     t.false(c.has("strawberry"));
@@ -132,7 +132,7 @@ test("check expiration on new item with autocommit", (t) => {
     t.is(c.keys.length, 1);
     t.snapshot(fs.readFileSync(path.join(t.context.options.dir, "cache.json"), "utf8"));
 
-    MockDate.set(moment().add(2, "hours"));
+    MockDate.set(moment().add(2, "hours").toDate());
 
     t.false(c.has("apple"));
     t.is(c.get("foo"), undefined);
@@ -175,7 +175,7 @@ test("check expiration on init", (t) => {
     // Contents of file should not have changed with autoCommit disabled
     t.deepEqual(fs.readJsonSync(path.join(t.context.options.dir, "cache.json")), contents);
 
-    MockDate.set(moment().add(30, "minutes"));
+    MockDate.set(moment().add(30, "minutes").toDate());
 
     t.true(c.has("apple"));
     t.true(c.has("strawberry"));
@@ -189,7 +189,7 @@ test("check expiration on init", (t) => {
     // Contents of file should not have changed with autoCommit disabled
     t.deepEqual(fs.readJsonSync(path.join(t.context.options.dir, "cache.json")), contents);
 
-    MockDate.set(moment().add(1, "hour"));
+    MockDate.set(moment().add(1, "hour").toDate());
 
     t.true(c.has("apple"));
     t.false(c.has("strawberry"));
@@ -203,7 +203,7 @@ test("check expiration on init", (t) => {
     // Contents of file should not have changed with autoCommit disabled
     t.deepEqual(fs.readJsonSync(path.join(t.context.options.dir, "cache.json")), contents);
 
-    MockDate.set(moment().add(2, "hours"));
+    MockDate.set(moment().add(2, "hours").toDate());
 
     t.false(c.has("apple"));
     t.is(c.get("foo"), undefined);
@@ -250,7 +250,7 @@ test("check expiration on init with autocommit", (t) => {
     t.is(c.keys.length, 3);
     t.snapshot(fs.readFileSync(path.join(t.context.options.dir, "cache.json"), "utf8"));
 
-    MockDate.set(moment().add(30, "minutes"));
+    MockDate.set(moment().add(30, "minutes").toDate());
 
     t.true(c.has("apple"));
     t.true(c.has("strawberry"));
@@ -263,7 +263,7 @@ test("check expiration on init with autocommit", (t) => {
     t.is(c.keys.length, 3);
     t.snapshot(fs.readFileSync(path.join(t.context.options.dir, "cache.json"), "utf8"));
 
-    MockDate.set(moment().add(1, "hour"));
+    MockDate.set(moment().add(1, "hour").toDate());
 
     t.true(c.has("apple"));
     t.false(c.has("strawberry"));
@@ -276,7 +276,7 @@ test("check expiration on init with autocommit", (t) => {
     t.is(c.keys.length, 1);
     t.snapshot(fs.readFileSync(path.join(t.context.options.dir, "cache.json"), "utf8"));
 
-    MockDate.set(moment().add(2, "hours"));
+    MockDate.set(moment().add(2, "hours").toDate());
 
     t.false(c.has("apple"));
     t.is(c.get("foo"), undefined);
@@ -295,7 +295,7 @@ test("check never expiring item", (t) => {
     t.is(c.keys.length, 1);
     t.is(c.get("foo"), value);
 
-    MockDate.set(moment().add(1, "year"));
+    MockDate.set(moment().add(1, "year").toDate());
 
     t.true(c.has("foo"));
     t.is(c.keys.length, 1);
