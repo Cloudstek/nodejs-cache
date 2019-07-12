@@ -17,7 +17,7 @@ test.before((t) => {
 });
 
 test.beforeEach(() => {
-    MockDate.set(moment.utc("2019-01-01T14:00:00").valueOf());
+    MockDate.set(moment.utc("2019-01-01T14:00:00").toDate());
 });
 
 // Defaults

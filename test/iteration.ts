@@ -17,7 +17,7 @@ test.before((t) => {
 test.beforeEach((t) => {
     const dir = util.randomString();
 
-    MockDate.set(moment.utc("2019-01-01T14:00:00").valueOf());
+    MockDate.set(moment.utc("2019-01-01T14:00:00").toDate());
 
     t.context.dirs.push(dir);
     t.context.options = {
@@ -58,7 +58,7 @@ test("iterate over some expired items using all", (t) => {
 
     t.snapshot(allBeforeExpiration);
 
-    MockDate.set(moment().add(1, "hour"));
+    MockDate.set(moment().add(1, "hour").toDate());
 
     const allAfterExpiration = c.all();
 
@@ -110,7 +110,7 @@ test("iterate over some expired items using iterator", (t) => {
     t.deepEqual(itemsBeforeExpiration, c.all());
     t.snapshot(itemsBeforeExpiration);
 
-    MockDate.set(moment().add(1, "hour"));
+    MockDate.set(moment().add(1, "hour").toDate());
 
     t.is(c.keys.length, 2);
     t.is(c.length, c.keys.length);
