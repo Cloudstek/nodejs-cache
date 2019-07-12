@@ -1,6 +1,6 @@
 {
   "name": "@cloudstek/cache",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple key/value (cache) store.",
   "author": "Maarten de Boer <maarten@cloudstek.nl>",
   "license": "MIT",
