@@ -15,7 +15,7 @@ It doesn't do anything fancy and it doesn't have a fancy name. Yet I needed a si
 
 ## Requirements
 
-* NodeJS >= 8
+* NodeJS >= 10
 * NPM / Yarn
 
 ## Installation
